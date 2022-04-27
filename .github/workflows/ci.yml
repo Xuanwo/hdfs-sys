@@ -22,8 +22,9 @@ jobs:
         with:
           python-version: '3.8'
       - name: Checkout java env
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
+          distribution: temurin
           java-version: '11'
       - name: Setup-hdfs env
         uses: beyondstorage/setup-hdfs@master
@@ -50,8 +51,9 @@ jobs:
         with:
           python-version: '3.8'
       - name: Checkout java env
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
+          distribution: temurin
           java-version: '11'
       - name: Setup-hdfs env
         uses: beyondstorage/setup-hdfs@master
@@ -79,8 +81,9 @@ jobs:
         with:
           python-version: '3.8'
       - name: Checkout java env
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
+          distribution: temurin
           java-version: '11'
       - name: Setup-hdfs env
         uses: beyondstorage/setup-hdfs@master
