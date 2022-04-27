@@ -24,6 +24,7 @@ jobs:
       - name: Checkout java env
         uses: actions/setup-java@v3
         with:
+          distribution: temurin
           java-version: '11'
       - name: Setup-hdfs env
         uses: beyondstorage/setup-hdfs@master
@@ -52,6 +53,7 @@ jobs:
       - name: Checkout java env
         uses: actions/setup-java@v3
         with:
+          distribution: temurin
           java-version: '11'
       - name: Setup-hdfs env
         uses: beyondstorage/setup-hdfs@master
@@ -81,6 +83,7 @@ jobs:
       - name: Checkout java env
         uses: actions/setup-java@v3
         with:
+          distribution: temurin
           java-version: '11'
       - name: Setup-hdfs env
         uses: beyondstorage/setup-hdfs@master
