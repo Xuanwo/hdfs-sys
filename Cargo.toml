@@ -7,7 +7,7 @@ edition = "2021"
 license = "Apache-2.0"
 name = "hdfs-sys"
 repository = "https://github.com/Xuanwo/hdrs"
-version = "0.0.4"
+version = "0.0.5"
 links = "hdfs"
 build = "build/main.rs"
 
