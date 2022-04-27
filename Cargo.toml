@@ -1,7 +1,7 @@
 [package]
 authors = ["Xuanwo <github@xuanwo.io>"]
 categories = ["command-line-utilities"]
-description = "Bindings to hdfs"
+description = "Bindings to HDFS Native C API"
 documentation = "https://docs.rs/hdfs-sys"
 edition = "2021"
 license = "Apache-2.0"
