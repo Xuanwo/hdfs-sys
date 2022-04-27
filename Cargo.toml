@@ -1,0 +1,26 @@
+[package]
+authors = ["Xuanwo <github@xuanwo.io>"]
+categories = ["command-line-utilities"]
+description = "Bindings to hdfs"
+documentation = "https://docs.rs/hdfs-sys"
+edition = "2021"
+license = "Apache-2.0"
+name = "hdfs-sys"
+repository = "https://github.com/Xuanwo/hdrs"
+version = "0.0.3"
+links = "hdfs"
+build = "build/main.rs"
+
+[package.metadata.docs.rs]
+all-features = true
+
+[features]
+default = ["hdfs_2_10_1"]
+hdfs_2_10_1 = []
+hdfs_3_2_3 = ["hdfs_2_10_1"]
+hdfs_3_3_2 = ["hdfs_2_10_1", "hdfs_3_2_3"]
+
+[build-dependencies]
+anyhow = "1.0.57"
+bindgen = "0.59.2"
+cc = "1.0.73"
