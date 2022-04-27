@@ -1,9 +1,7 @@
 extern crate bindgen;
 
 use anyhow::Result;
-use std::collections::HashSet;
-use std::path::PathBuf;
-use std::{env, fs};
+use std::env;
 
 fn main() -> Result<()> {
     // Ignore linking libs if we are building docs.
