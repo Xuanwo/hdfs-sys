@@ -1,9 +1,6 @@
-extern crate bindgen;
-
-use anyhow::Result;
 use std::env;
 
-fn main() -> Result<()> {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Ignore linking libs if we are building docs.
     if env::var("DOCS_RS").is_ok() {
         return Ok(());
