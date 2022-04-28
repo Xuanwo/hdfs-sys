@@ -19,6 +19,3 @@ default = ["hdfs_2_10_1"]
 hdfs_2_10_1 = []
 hdfs_3_2_3 = ["hdfs_2_10_1"]
 hdfs_3_3_2 = ["hdfs_2_10_1", "hdfs_3_2_3"]
-
-[build-dependencies]
-anyhow = "1.0.57"
