@@ -1,5 +1,3 @@
-extern crate bindgen;
-
 use anyhow::Result;
 use std::env;
 

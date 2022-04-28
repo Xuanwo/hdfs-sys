@@ -22,5 +22,3 @@ hdfs_3_3_2 = ["hdfs_2_10_1", "hdfs_3_2_3"]
 
 [build-dependencies]
 anyhow = "1.0.57"
-bindgen = "0.59.2"
-cc = "1.0.73"
