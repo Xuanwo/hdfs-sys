@@ -9,7 +9,6 @@ name = "hdfs-sys"
 repository = "https://github.com/Xuanwo/hdrs"
 version = "0.1.0"
 links = "hdfs"
-build = "build/main.rs"
 
 [package.metadata.docs.rs]
 all-features = true
@@ -29,3 +28,6 @@ hdfs_3_0 = ["hdfs_2_10"]
 hdfs_3_1 = ["hdfs_3_0"]
 hdfs_3_2 = ["hdfs_3_1"]
 hdfs_3_3 = ["hdfs_3_2"]
+
+[build-dependencies]
+cc = "1.0.73"

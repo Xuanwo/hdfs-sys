@@ -33,12 +33,11 @@ Enable one feature will also enable all features before it. For example, enable 
 
 ## Dependencies
 
-This crate will link to `libhdfs` and `libjvm` dynamically.
+This crate will link to `libjvm` dynamically.
 
 To make this crate works correctly, please make sure the following env set correctly:
 
 - `JAVA_HOME`: `hdfs-sys` will search `${JAVA_HOME}/lib/server` to link `libjvm`.
-- `HADOOP_HOME`: `hdfs-sys` will search `${HADOOP_HOME}/lib/native` to link `libhdfs`.
 
 NOTE: `hdfs-sys` will ignore linking if `DOCS_RS` is set to build docs.
 
@@ -49,8 +48,8 @@ NOTE: `hdfs-sys` will ignore linking if `DOCS_RS` is set to build docs.
 ```shell
 export JAVA_HOME=/path/to/java
 export HADOOP_HOME=/path/to/hadoop
-export LD_LIBRARY_PATH=${HADOOP_HOME}/lib/native:${JAVA_HOME}/lib/server
-export CLASSPATH=${HADOOP_HOME}/share/hadoop/common/*:${HADOOP_HOME}/share/hadoop/common/lib/*:${HADOOP_HOME}/share/hadoop/hdfs/*:${HADOOP_HOME}/share/hadoop/hdfs/lib/*:${HADOOP_HOME}/etc/hadoop/*
+export LD_LIBRARY_PATH=${JAVA_HOME}/lib/server
+export CLASSPATH=$(find $HADOOP_HOME -iname "*.jar" | xargs echo | tr ' ' ':')
 ```
 
 ## Contributing
