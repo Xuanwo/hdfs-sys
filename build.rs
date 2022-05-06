@@ -17,9 +17,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut builder = cc::Build::new();
     builder.warnings(false);
-    // builder.flag_if_supported("-Wno-incompatible-pointer-types");
     builder.static_flag(true);
     builder.static_crt(true);
+
+    // Ignore all warnings from cc as we don't care about code written by Apache Hadoop.
+    builder.flag_if_supported("-w");
+
+    // Use c++ 14 instead.
+    if cfg!(windows) {
+        builder.flag("/std:c11");
+    } else {
+        builder.flag("--std=c11");
+    }
 
     // Handle java headers.
     builder.include(format!("{java_home}/include"));
@@ -86,7 +95,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     builder.file(format!("libhdfs/{version}/hdfs.c"));
 
     // Since 2.6, we need to include mutexes.
-    if cfg!(feature = "hdfs_2_6") {
+    if cfg!(feature = "hdfs_2_6") || cfg!(target_os = "windows") {
         builder.include(format!("libhdfs/{version}/os"));
 
         if cfg!(target_os = "windows") {
