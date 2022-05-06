@@ -29,7 +29,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         // Set the optimizer level.
         builder.flag("-O2");
         // Set warning level 4.
-        builder.file("/W4");
+        builder.flag("/W4");
         // Skip "unreferenced formal parameter".
         builder.flag("/wd4100");
         // Skip "conditional expression is constant".
