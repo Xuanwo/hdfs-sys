@@ -25,7 +25,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         builder.include(format!("{java_home}/include/linux"));
     }
     if cfg!(target_os = "macos") {
-        builder.include(format!("{java_home}/include/macos"));
+        builder.include(format!("{java_home}/include/darwin"));
+    }
+    if cfg!(target_os = "windows") {
+        builder.include(format!("{java_home}/include/win32"));
     }
 
     // Choose the latest hdfs version.
