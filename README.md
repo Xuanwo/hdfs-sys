@@ -37,7 +37,7 @@ This crate will link to `libjvm` dynamically.
 
 To make this crate works correctly, please make sure the following env set correctly:
 
-- `JAVA_HOME`: `hdfs-sys` will search `${JAVA_HOME}/lib/server` to link `libjvm`.
+- `JAVA_HOME`: `hdfs-sys` will search path like `${JAVA_HOME}/lib/server` to link `libjvm`.
 
 NOTE: `hdfs-sys` will ignore linking if `DOCS_RS` is set to build docs.
 
