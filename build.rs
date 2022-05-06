@@ -7,7 +7,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     // Make sure jvm has been linked.
-    let java_home = env::var("JAVA_HOME")?;
+    let java_home = env::var("JAVA_HOME").expect("JAVA_HOME must be set");
 
     // I don't know where to find libjvm.so exactly.
     // The only thing I can do is search everywhere I know.
