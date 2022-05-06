@@ -22,6 +22,31 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Ignore all warnings from cc as we don't care about code written by Apache Hadoop.
     builder.flag_if_supported("-w");
+    builder.flag_if_supported("-std=c++17");
+
+    // Inspired by [hadoop-hdfs-native-client/src/CMakeLists.txt](https://github.com/apache/hadoop/blob/trunk/hadoop-hdfs-project/hadoop-hdfs-native-client/src/CMakeLists.txt)
+    if cfg!(windows) {
+        // Set the optimizer level.
+        builder.flag("-O2");
+        // Set warning level 4.
+        builder.file("/W4");
+        // Skip "unreferenced formal parameter".
+        builder.flag("/wd4100");
+        // Skip "conditional expression is constant".
+        builder.flag("/wd4127");
+        // Skip deprecated POSIX function warnings.
+        builder.flag("-D_CRT_NONSTDC_NO_DEPRECATE");
+        // Skip CRT non-secure function warnings.  If we can convert usage of
+        // strerror, getenv and ctime to their secure CRT equivalents, then we can
+        // re-enable the CRT non-secure function warnings.
+        builder.flag("-D_CRT_SECURE_NO_WARNINGS");
+        // Omit unneeded headers.
+        builder.flag("-DWIN32_LEAN_AND_MEAN");
+    } else {
+        builder.flag("-fvisibility=hidden");
+        // using old default behavior on GCC >= 10.0
+        builder.flag("-fcommon");
+    }
 
     // Handle java headers.
     builder.include(format!("{java_home}/include"));
