@@ -19,12 +19,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     builder.static_flag(true);
     builder.static_crt(true);
 
-    {
-        builder.include(format!("{java_home}/include"));
+    // Handle java headers.
+    builder.include(format!("{java_home}/include"));
+    if cfg!(os = "linux") {
         builder.include(format!("{java_home}/include/linux"));
     }
+    if cfg!(os = "macos") {
+        builder.include(format!("{java_home}/include/macos"));
+    }
 
-    // Choose the latest version.
+    // Choose the latest hdfs version.
     let mut version = "hdfs_2_2";
     if cfg!(feature = "hdfs_2_3") {
         version = "hdfs_2_3"
