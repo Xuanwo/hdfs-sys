@@ -23,13 +23,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Ignore all warnings from cc as we don't care about code written by Apache Hadoop.
     builder.flag_if_supported("-w");
 
-    // Use c++ 14 instead.
-    if cfg!(windows) {
-        builder.flag("/std:c11");
-    } else {
-        builder.flag("--std=c11");
-    }
-
     // Handle java headers.
     builder.include(format!("{java_home}/include"));
     if cfg!(target_os = "linux") {
