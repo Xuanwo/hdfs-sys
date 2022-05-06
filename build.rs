@@ -8,8 +8,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Make sure jvm has been linked.
     let java_home = env::var("JAVA_HOME")?;
+
+    // I don't know where to find libjvm.so exactly.
+    // The only thing I can do is search everywhere I know.
+    println!("cargo:rustc-link-search=native={java_home}/bin/client");
+    println!("cargo:rustc-link-search=native={java_home}/bin/server");
     println!("cargo:rustc-link-search=native={java_home}/lib/server");
     println!("cargo:rustc-link-search=native={java_home}/lib/amd64/server");
+    println!("cargo:rustc-link-search=native={java_home}/jre/lib/server");
+    println!("cargo:rustc-link-search=native={java_home}/jre/lib/amd64/server");
     println!("cargo:rustc-link-lib=jvm");
 
     // Static link compiled `libhdfs.a`
