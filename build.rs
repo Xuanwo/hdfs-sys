@@ -9,6 +9,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Make sure jvm has been linked.
     let java_home = env::var("JAVA_HOME")?;
     println!("cargo:rustc-link-search=native={java_home}/lib/server");
+    println!("cargo:rustc-link-search=native={java_home}/lib/amd64/server");
     println!("cargo:rustc-link-lib=jvm");
 
     // Static link compiled `libhdfs.a`
@@ -16,6 +17,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut builder = cc::Build::new();
     builder.warnings(false);
+    // builder.flag_if_supported("-Wno-incompatible-pointer-types");
     builder.static_flag(true);
     builder.static_crt(true);
 
@@ -41,6 +43,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     if cfg!(feature = "hdfs_2_5") {
         version = "hdfs_2_5"
+    }
+    // Since 2.6, hdfs supports windows.
+    //
+    // We build with src from `hdfs_2_6` but expose earlier ABI like `hdfs_2_2`.
+    // This simple trick makes hdfs-sys works on windows without breaking our ABI promise.
+    if cfg!(target_os = "windows") {
+        version = "hdfs_2_6"
     }
     if cfg!(feature = "hdfs_2_6") {
         version = "hdfs_2_6"
@@ -80,7 +89,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if cfg!(feature = "hdfs_2_6") {
         builder.include(format!("libhdfs/{version}/os"));
 
-        if cfg!(windows) {
+        if cfg!(target_os = "windows") {
             builder.include(format!("libhdfs/{version}/os/windows"));
             builder.file(format!("libhdfs/{version}/os/windows/mutexes.c"));
             builder.file(format!("libhdfs/{version}/os/windows/thread.c"));
