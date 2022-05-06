@@ -43,7 +43,7 @@ NOTE: `hdfs-sys` will ignore linking if `DOCS_RS` is set to build docs.
 
 ## Runtime
 
-`libhdfs` uses JNI to call functions provided by jars that provided by hadoop releases. Please make sure `CLASSPATH` is set correctly:
+`hdfs-sys` uses JNI to call functions provided by jars that provided by hadoop releases. Please make sure `CLASSPATH` is set correctly before calling any functions provided by `hdfs-sys`:
 
 ```shell
 export JAVA_HOME=/path/to/java
