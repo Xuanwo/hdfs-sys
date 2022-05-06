@@ -21,10 +21,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Handle java headers.
     builder.include(format!("{java_home}/include"));
-    if cfg!(os = "linux") {
+    if cfg!(target_os = "linux") {
         builder.include(format!("{java_home}/include/linux"));
     }
-    if cfg!(os = "macos") {
+    if cfg!(target_os = "macos") {
         builder.include(format!("{java_home}/include/macos"));
     }
 
@@ -77,7 +77,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if cfg!(feature = "hdfs_2_6") {
         builder.include(format!("libhdfs/{version}/os"));
 
-        if cfg!(os = "windows") {
+        if cfg!(windows) {
             builder.include(format!("libhdfs/{version}/os/windows"));
             builder.file(format!("libhdfs/{version}/os/windows/mutexes.c"));
             builder.file(format!("libhdfs/{version}/os/windows/thread.c"));
