@@ -87,4 +87,4 @@ jobs:
         env:
           RUST_LOG: DEBUG
           RUST_BACKTRACE: full
-          LD_LIBRARY_PATH: ${{ env.JAVA_HOME }}/lib/server:${{ env.JAVA_HOME }}/lib/amd64/server
+          LD_LIBRARY_PATH: ${{ env.JAVA_HOME }}/lib/server:${{ env.JAVA_HOME }}/lib/amd64/server:${{ env.JAVA_HOME }}/jre/lib/server:${{ env.JAVA_HOME }}/jre/lib/amd64/server
