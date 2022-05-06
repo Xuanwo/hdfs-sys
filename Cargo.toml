@@ -7,7 +7,7 @@ edition = "2021"
 license = "Apache-2.0"
 name = "hdfs-sys"
 repository = "https://github.com/Xuanwo/hdrs"
-version = "0.1.0"
+version = "0.2.0"
 links = "hdfs"
 
 [package.metadata.docs.rs]
