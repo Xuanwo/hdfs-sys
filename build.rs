@@ -150,7 +150,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Sadly, hadoop include `dirent.h` but mvsc doesn't support it.
     // So we include [tronkko/dirent](https://raw.githubusercontent.com/tronkko/dirent/master/include/dirent.h) instead.
     if cfg!(feature = "hdfs_3_3") && cfg!(target_os = "windows") {
-        builder.include("dirent/include")
+        builder.include("dirent/include");
     }
 
     builder.compile("hdfs");
