@@ -60,6 +60,12 @@ Check out the [CONTRIBUTING.md](./CONTRIBUTING.md) guide for more details on get
 
 Submit [issues](https://github.com/Xuanwo/hdfs-sys/issues/new/choose) for bug report or asking questions in [discussion](https://github.com/Xuanwo/hdfs-sys/discussions/new?category=q-a).
 
+## Related Projects
+
+- [hdfs-rs](https://github.com/hyunsik/hdfs-rs/): libhdfs binding and wrapper APIs for Rust, not maintained since 2015.
+- [fs-hdfs](https://github.com/yahoNanJing/fs-hdfs): forks based on [hdfs-rs](https://github.com/hyunsik/hdfs-rs/), C files are from hadoop `2.7.3`.
+- [dataFusion-hdfs-native](https://github.com/datafusion-contrib/datafusion-hdfs-native): bindings of [libhdfs3](https://github.com/ClickHouse/libhdfs3/)
+
 ## Acknowledgment
 
 This project is highly inspired by [clang-sys](https://github.com/KyleMayes/clang-sys)
