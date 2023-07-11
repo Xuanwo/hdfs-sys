@@ -31,3 +31,4 @@ hdfs_3_3 = ["hdfs_3_2"]
 
 [build-dependencies]
 cc = "1.0.73"
+java-locator = "0.1.5"
