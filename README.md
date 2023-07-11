@@ -1,6 +1,6 @@
 # hdfs-sys &emsp; [![Build Status]][actions] [![Latest Version]][crates.io]
 
-[Build Status]: https://img.shields.io/github/workflow/status/Xuanwo/hdfs-sys/CI/main
+[Build Status]: https://img.shields.io/github/actions/workflow/status/Xuanwo/hdfs-sys/ci.yml
 [actions]: https://github.com/Xuanwo/hdfs-sys/actions?query=branch%3Amain
 [Latest Version]: https://img.shields.io/crates/v/hdfs-sys.svg
 [crates.io]: https://crates.io/crates/hdfs-sys
