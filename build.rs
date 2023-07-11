@@ -1,17 +1,53 @@
 use std::env;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+
+fn main() -> Result<()> {
     // Ignore link while building docs.
     if env::var("DOCS_RS").is_ok() {
         return Ok(());
     }
 
-    let java_home = java_locator::locate_java_home()?;
-    let libjvm_path = java_locator::locate_jvm_dyn_library()?;
+    let found = find_libhdfs()?;
+    if !found {
+        build_libhdfs()?;
+    }
 
-    println!("libjvm_path: {libjvm_path}");
-    println!("cargo:rustc-link-search=native={libjvm_path}");
-    println!("cargo:rustc-link-lib=jvm");
+    Ok(())
+}
+
+/// Find libhdfs
+///
+/// Return `true` if libhdfs is found, else `false`.
+///
+/// - Check `HDFS_LIB_DIR` first, then `HADOOP_HOME`.
+/// - If `HDFS_STATIC` is set, link statically, otherwise, dynamic.
+fn find_libhdfs() -> Result<bool> {
+    // rerun if hdfs related env changed
+    println!("cargo:rerun-if-env-changed=HDFS_LIB_DIR");
+    println!("cargo:rerun-if-env-changed=HDFS_STATIC");
+    println!("cargo:rerun-if-env-changed=HADOOP_HOME");
+
+    let lib_dir = if let Ok(lib_dir) = env::var("HDFS_LIB_DIR") {
+        lib_dir
+    } else if let Ok(hadoop_home) = env::var("HADOOP_HOME") {
+        format!("{hadoop_home}/lib/native")
+    } else {
+        return Ok(false);
+    };
+
+    println!("cargo:rustc-link-search=native={lib_dir}");
+    let mode = match env::var_os("HDFS_STATIC") {
+        Some(_) => "static",
+        None => "dylib",
+    };
+    println!("cargo:rustc-link-lib={mode}=hdfs");
+
+    Ok(true)
+}
+
+fn build_libhdfs() -> Result<()> {
+    let java_home = java_locator::locate_java_home()?;
 
     // Static link compiled `libhdfs.a`
     println!("cargo:rustc-link-lib=static=hdfs");
