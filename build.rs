@@ -9,6 +9,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let java_home = java_locator::locate_java_home()?;
     let libjvm_path = java_locator::locate_jvm_dyn_library()?;
 
+    println!("libjvm_path: {libjvm_path}");
     println!("cargo:rustc-link-search=native={libjvm_path}");
     println!("cargo:rustc-link-lib=jvm");
 
