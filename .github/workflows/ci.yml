@@ -53,11 +53,6 @@ jobs:
           echo "${{ steps.setup_java.outputs.path }}\jre\bin" >> $GITHUB_PATH
           echo "${{ steps.setup_java.outputs.path }}\jre\bin\server" >> $GITHUB_PATH
 
-      - name: Update path for macos
-        if: matrix.os == 'macos-latest'
-        run: |
-          ls ${{ steps.setup_java.outputs.path }}/jre/lib/server
-
       - name: Build
         run: cargo build --features ${{ matrix.feature }}
       - name: Test
