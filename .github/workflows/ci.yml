@@ -56,8 +56,7 @@ jobs:
       - name: Update path for macos
         if: matrix.os == 'macos-latest'
         run: |
-          ls ${{ steps.setup_java.outputs.path }}/lib
-          ls ${{ steps.setup_java.outputs.path }}/jre/lib
+          ls ${{ steps.setup_java.outputs.path }}/jre/lib/server
 
       - name: Build
         run: cargo build --features ${{ matrix.feature }}
