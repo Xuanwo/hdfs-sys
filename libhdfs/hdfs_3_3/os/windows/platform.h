@@ -19,7 +19,6 @@
 #ifndef LIBHDFS_PLATFORM_H
 #define LIBHDFS_PLATFORM_H
 
-#include <hack.h>
 #include <stdio.h>
 #include <windows.h>
 #include <winsock.h>
