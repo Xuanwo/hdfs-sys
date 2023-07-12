@@ -56,6 +56,7 @@ jobs:
       - name: Update path for macos
         if: matrix.os == 'macos-latest'
         run: |
+          mkdir -p ~/lib
           ln -s ${{ steps.setup_java.outputs.path }}/jre/lib/server/libjvm.dylib ~/lib/
 
       - name: Build
