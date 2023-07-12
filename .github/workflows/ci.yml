@@ -44,15 +44,11 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - name: Install dirent.h for windows
-        if: matrix.os == 'windows-latest' && matrix.feature == 'hdfs_3_3'
-        run: |
-          curl -L
 
       - name: Build
         run: cargo build --features ${{ matrix.feature }}
       - name: Test
-        uses: cargo test --features ${{ matrix.feature }} -- --nocapture
+        run: cargo test --features ${{ matrix.feature }} -- --nocapture
         env:
           RUST_LOG: DEBUG
           RUST_BACKTRACE: full
