@@ -50,8 +50,9 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           ls ${{ steps.setup_java.outputs.path }}\bin
-          ls ${{ steps.setup_java.outputs.path }}\jre
-          echo "${{ steps.setup_java.outputs.path }}\bin\server" >> $GITHUB_PATH
+          ls ${{ steps.setup_java.outputs.path }}\jre\bin
+          echo "${{ steps.setup_java.outputs.path }}\bin" >> $GITHUB_PATH
+          echo "${{ steps.setup_java.outputs.path }}\jre\bin" >> $GITHUB_PATH
 
       - name: Build
         run: cargo build --features ${{ matrix.feature }}
