@@ -46,10 +46,11 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
 
-      # Add jvm.dll in PATH to make sure windows can find it.
+      # Add jvm.lib & jvm.dll in PATH to make sure windows can find it.
       - name: Update path for windows
         if: matrix.os == 'windows-latest'
         run: |
+          echo "${{ steps.setup_java.outputs.path }}\lib" >> $GITHUB_PATH
           echo "${{ steps.setup_java.outputs.path }}\jre\bin\server" >> $GITHUB_PATH
 
       # Add libjvm.dylib in RPATH to make sure macos can find it.
