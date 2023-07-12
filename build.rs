@@ -8,10 +8,21 @@ fn main() -> Result<()> {
         return Ok(());
     }
 
+    find_jvm()?;
+
     let found = find_libhdfs()?;
     if !found {
         build_libhdfs()?;
     }
+
+    Ok(())
+}
+
+fn find_jvm() -> Result<()> {
+    let jvm_path = java_locator::locate_jvm_dyn_library()?;
+
+    println!("cargo:rustc-link-search=native={}", jvm_path);
+    println!("cargo:rustc-link-lib=jvm");
 
     Ok(())
 }
