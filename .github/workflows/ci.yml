@@ -33,7 +33,7 @@ jobs:
         # Visit [Tracking issue of windows support](https://github.com/Xuanwo/hdfs-sys/issues/17) for more details.
         os: [ ubuntu-latest, macos-latest, windows-latest ]
         feature: [
-          "hdfs_2_2",
+          "hdfs_2_6",
           "hdfs_2_10",
           "hdfs_3_3",
         ]

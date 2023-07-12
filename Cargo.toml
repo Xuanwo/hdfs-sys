@@ -14,7 +14,7 @@ links = "hdfs"
 all-features = true
 
 [features]
-default = ["hdfs_2_2"]
+default = ["hdfs_2_6"]
 hdfs_2_2 = []
 hdfs_2_3 = ["hdfs_2_2"]
 hdfs_2_4 = ["hdfs_2_3"]
