@@ -22,15 +22,7 @@ fn find_jvm() -> Result<()> {
     let jvm_path = java_locator::locate_jvm_dyn_library()?;
 
     println!("cargo:rustc-link-lib=jvm");
-    println!("cargo:rustc-link-search=native={}", jvm_path);
-
-    // macos doesn't enable `DYLD_LIBRARY_PATH` by default, let's add jvm path to rpath instead.
-    //
-    // Please note this only works for build and run binary in the same machine.
-    // For users that have different jvm path, they need to make sure jvm loaded as expected.
-    if cfg!(macos) {
-        println!("cargo:rustc-flags=-C link-arg=-Wl,-rpath,{jvm_path}");
-    }
+    println!("cargo:rustc-link-search=native={jvm_path}");
 
     Ok(())
 }
