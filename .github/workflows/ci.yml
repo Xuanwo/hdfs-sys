@@ -50,7 +50,7 @@ jobs:
       - name: Update path for windows
         if: matrix.os == 'windows-latest'
         run: |
-          echo "LIB=${LIB};${{ steps.setup_java.outputs.path }}\jre\bin\server" >> $GITHUB_ENV
+          echo "LIB=${LIB};${{ steps.setup_java.outputs.path }}\lib;${{ steps.setup_java.outputs.path }}\jre\bin\server" >> $GITHUB_ENV
 
       # Add libjvm.dylib in RPATH to make sure macos can find it.
       - name: Update path for macos
