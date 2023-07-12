@@ -48,6 +48,7 @@ jobs:
       - name: Update Path for windows
         if: matrix.os == 'windows-latest'
         run: |
+          ls ${JAVA_HOME}\bin\server
           echo "${JAVA_HOME}\bin\server" >> $GITHUB_PATH
 
       - name: Build
