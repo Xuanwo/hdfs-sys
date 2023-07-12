@@ -39,6 +39,15 @@ Please note:
 - Enable one feature will also enable all features before it. For example, enable `hdfs_2_4` will also enable `hdfs_2_3` and `hdfs_2_2`.
 - Too old version of hdfs could contain bugs or can't compile on your platform.
 
+## Compile
+
+`hdfs-sys` supports both dynamic link, static link and vendor:
+
+- Use `HDFS_LIB_DIR` to specify the path of `libhdfs.so` or `libhdfs.a`
+- Use `HDFS_STATIC=1` to choose to switch between dynamic link and static link
+- If `HDFS_LIB_DIR` is not set, we will try to find `${HADOOP_HOME}/lib/native`
+- If all env are empty, we will try to compile libhdfs and link it in static
+
 ## Dependencies
 
 This crate will link to `libjvm` dynamically.
