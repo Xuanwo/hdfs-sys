@@ -19,6 +19,7 @@
 #ifndef LIBHDFS_PLATFORM_H
 #define LIBHDFS_PLATFORM_H
 
+#include <hack.h>
 #include <stdio.h>
 #include <windows.h>
 #include <winsock.h>
@@ -82,5 +83,12 @@ typedef CRITICAL_SECTION mutex;
  * Thread data type defined as HANDLE to a Windows thread.
  */
 typedef HANDLE threadId;
+
+/* On Windows, ssize_t does not exist, so manually define to SSIZE_T. */
+#ifdef _WIN64
+typedef long int ssize_t;
+#else
+typedef int ssize_t;
+#endif
 
 #endif
