@@ -9,15 +9,21 @@ Bindings to `HDFS` Native C API.
 
 Work with these bindings directly is boring and error proven, please use [hdrs](https://github.com/Xuanwo/hdrs) instead if ever possible.
 
+## Supported Platforms
+
+- Linux
+- macOS
+- Windows
+
 ## Supported Versions
 
 To target a version of `libhdfs`, enable a Cargo features such as one of the following:
 
-- `hdfs_2_2` (**default**): requires hdfs 2.2 or later releases.
+- `hdfs_2_2` : requires hdfs 2.2 or later releases.
 - `hdfs_2_3`: requires hdfs 2.3 or later releases.
 - `hdfs_2_4`: requires hdfs 2.4 or later releases.
 - `hdfs_2_5`: requires hdfs 2.5 or later releases.
-- `hdfs_2_6`: requires hdfs 2.6 or later releases.
+- `hdfs_2_6`: (**default**) requires hdfs 2.6 or later releases.
 - `hdfs_2_7`: requires hdfs 2.7 or later releases.
 - `hdfs_2_8`: requires hdfs 2.8 or later releases.
 - `hdfs_2_9`: requires hdfs 2.9 or later releases.
@@ -27,9 +33,20 @@ To target a version of `libhdfs`, enable a Cargo features such as one of the fol
 - `hdfs_3_2`: requires hdfs 3.2 or later releases.
 - `hdfs_3_3`: requires hdfs 3.3 or later releases.
 
-If you do not enable one of these features, the API provided by `hdfs_2_2` will be available by default.
+Please note:
 
-Enable one feature will also enable all features before it. For example, enable `hdfs_2_4` will also enable `hdfs_2_3` and `hdfs_2_2`.
+- If you do not enable one of these features, the API provided by `hdfs_2_6` will be available by default.
+- Enable one feature will also enable all features before it. For example, enable `hdfs_2_4` will also enable `hdfs_2_3` and `hdfs_2_2`.
+- Too old version of hdfs could contain bugs or can't compile on your platform.
+
+## Compile
+
+`hdfs-sys` supports both dynamic link, static link and vendor:
+
+- Use `HDFS_LIB_DIR` to specify the path of `libhdfs.so` or `libhdfs.a`
+- Use `HDFS_STATIC=1` to choose to switch between dynamic link and static link
+- If `HDFS_LIB_DIR` is not set, we will try to find `${HADOOP_HOME}/lib/native`
+- If all env are empty, we will try to compile libhdfs and link it in static
 
 ## Dependencies
 
