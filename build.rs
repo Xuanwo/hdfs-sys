@@ -22,7 +22,7 @@ fn find_jvm() -> Result<()> {
     let jvm_path = java_locator::locate_jvm_dyn_library()?;
 
     println!("cargo:rustc-link-lib=jvm");
-    println!("cargo:rustc-link-search=native={jvm_path}");
+    println!("cargo:rustc-link-search={jvm_path}");
 
     Ok(())
 }
