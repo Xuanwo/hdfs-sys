@@ -49,7 +49,8 @@ jobs:
       - name: Update Path for windows
         if: matrix.os == 'windows-latest'
         run: |
-          ls ${{ steps.setup_java.outputs.path }}
+          ls ${{ steps.setup_java.outputs.path }}\bin
+          ls ${{ steps.setup_java.outputs.path }}\jre
           echo "${{ steps.setup_java.outputs.path }}\bin\server" >> $GITHUB_PATH
 
       - name: Build
