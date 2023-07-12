@@ -8,9 +8,27 @@ fn main() -> Result<()> {
         return Ok(());
     }
 
+    find_jvm()?;
+
     let found = find_libhdfs()?;
     if !found {
         build_libhdfs()?;
+    }
+
+    Ok(())
+}
+
+fn find_jvm() -> Result<()> {
+    let jvm_path = java_locator::locate_jvm_dyn_library()?;
+
+    println!("cargo:rustc-link-lib=jvm");
+    println!("cargo:rustc-link-search=native={jvm_path}");
+
+    // Add jvm.lib into search path for windows.
+    if cfg!(windows) {
+        if let Ok(jvm_lib_path) = java_locator::locate_file("jvm.lib") {
+            println!("cargo:rustc-link-search=native={jvm_lib_path}");
+        }
     }
 
     Ok(())
@@ -182,6 +200,11 @@ fn build_libhdfs() -> Result<()> {
     // Since 3.3, we need to compile `jclasses.c`
     if cfg!(feature = "hdfs_3_3") {
         builder.file(format!("libhdfs/{version}/jclasses.c"));
+
+        // Since 3.3, windows will need to link `dirent`
+        if cfg!(target_os = "windows") {
+            builder.include("libdirent/include");
+        }
     }
 
     builder.compile("hdfs");

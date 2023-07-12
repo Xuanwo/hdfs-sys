@@ -83,4 +83,11 @@ typedef CRITICAL_SECTION mutex;
  */
 typedef HANDLE threadId;
 
+/* On Windows, ssize_t does not exist, so manually define to SSIZE_T. */
+#ifdef _WIN64
+typedef long int ssize_t;
+#else
+typedef int ssize_t;
+#endif
+
 #endif
