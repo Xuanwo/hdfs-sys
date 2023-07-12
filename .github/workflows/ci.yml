@@ -45,6 +45,11 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
 
+      - name: Update Path for windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          echo "${JAVA_HOME}\bin\server" >> $GITHUB_PATH
+
       - name: Build
         run: cargo build --features ${{ matrix.feature }}
       - name: Test
