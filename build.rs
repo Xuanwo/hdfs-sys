@@ -182,6 +182,11 @@ fn build_libhdfs() -> Result<()> {
     // Since 3.3, we need to compile `jclasses.c`
     if cfg!(feature = "hdfs_3_3") {
         builder.file(format!("libhdfs/{version}/jclasses.c"));
+
+        // Since 3.3, windows will need to link `dirent`
+        if cfg!(target_os = "windows") {
+            builder.include("libdirent/include");
+        }
     }
 
     builder.compile("hdfs");
