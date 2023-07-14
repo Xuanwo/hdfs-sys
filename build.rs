@@ -10,7 +10,11 @@ fn main() -> Result<()> {
 
     find_jvm()?;
 
-    let found = find_libhdfs()?;
+    let found = if cfg!(feature = "vendored") {
+        false
+    } else {
+        find_libhdfs()?
+    };
     if !found {
         build_libhdfs()?;
     }
