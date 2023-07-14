@@ -43,6 +43,7 @@ Please note:
 
 `hdfs-sys` supports both dynamic link, static link and vendor:
 
+- If `vnedored` feature has been enabled, `hdfs-sys` will compile and link `libhdfs` in static.
 - Use `HDFS_LIB_DIR` to specify the path of `libhdfs.so` or `libhdfs.a`
 - Use `HDFS_STATIC=1` to choose to switch between dynamic link and static link
 - If `HDFS_LIB_DIR` is not set, we will try to find `${HADOOP_HOME}/lib/native`
