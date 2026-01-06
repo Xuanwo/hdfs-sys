@@ -38,34 +38,29 @@ jobs:
           "hdfs_3_3",
         ]
 
+    # We set JAVA_HOME, JAVA_HOME_8_X64 and JAVA_HOME_8_ARM64,
+    # to ensure compilation works out of the box for all targets
+    # A user can manually specify JAVA_HOME to use their own distribution
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         id: setup_java
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '8'
 
-      # Add jvm.dll in PATH to make sure windows can find it.
-      - name: Update path for windows
-        if: matrix.os == 'windows-latest'
-        run: |
-          echo "${{ steps.setup_java.outputs.path }}\lib" >> $GITHUB_PATH
-          echo "${{ steps.setup_java.outputs.path }}\jre\bin\server" >> $GITHUB_PATH
-          echo "LIB=${LIB};${{ steps.setup_java.outputs.path }}\lib;${{ steps.setup_java.outputs.path }}\jre\bin\server" >> $GITHUB_ENV
-
-      # Add libjvm.dylib in RPATH to make sure macos can find it.
-      - name: Update path for macos
-        if: matrix.os == 'macos-latest'
-        run: |
-          mkdir -p ~/lib
-          ln -s ${{ steps.setup_java.outputs.path }}/jre/lib/server/libjvm.dylib ~/lib/
-
       - name: Build
-        run: cargo build --features ${{ matrix.feature }}
+        run: cargo build --features ${{ matrix.feature }},vendored
+        env:
+          JAVA_HOME: ""
+          JAVA_HOME_8_X64: ""
+          JAVA_HOME_8_ARM64: ""
+
       - name: Test
-        run: cargo test --features ${{ matrix.feature }} -- --nocapture
+        run: cargo test --features ${{ matrix.feature }},vendored -- --nocapture
         env:
           RUST_LOG: DEBUG
           RUST_BACKTRACE: full
-          LD_LIBRARY_PATH: ${{ env.JAVA_HOME }}/lib/server:${{ env.JAVA_HOME }}/lib/amd64/server:${{ env.JAVA_HOME }}/jre/lib/server:${{ env.JAVA_HOME }}/jre/lib/amd64/server
+          JAVA_HOME: ""
+          JAVA_HOME_8_X64: ""
+          JAVA_HOME_8_ARM64: ""

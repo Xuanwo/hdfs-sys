@@ -29,7 +29,7 @@ hdfs_3_1 = ["hdfs_3_0"]
 hdfs_3_2 = ["hdfs_3_1"]
 hdfs_3_3 = ["hdfs_3_2"]
 
-vendored = []
+vendored = ["java-locator/locate-jdk-only"] # JRE is not enough for building, we need the JDK
 
 [build-dependencies]
 cc = "1"

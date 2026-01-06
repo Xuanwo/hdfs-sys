@@ -28,11 +28,16 @@ fn find_jvm() -> Result<()> {
     println!("cargo:rustc-link-lib=jvm");
     println!("cargo:rustc-link-search=native={jvm_path}");
 
+    // Add JVM to rpath
+    println!("cargo:rustc-link-arg=-Wl,-rpath,{jvm_path}");
+
+    // Export the used JVM_PATH as metadata, in case a crate needs it in order to link
+    println!("cargo:metadata=JVM_PATH={jvm_path}");
+
     // Add jvm.lib into search path for windows.
-    if cfg!(windows) {
-        if let Ok(jvm_lib_path) = java_locator::locate_file("jvm.lib") {
-            println!("cargo:rustc-link-search=native={jvm_lib_path}");
-        }
+    #[cfg(windows)]
+    if let Ok(jvm_lib_path) = java_locator::locate_file("jvm.lib") {
+        println!("cargo:rustc-link-search=native={jvm_lib_path}");
     }
 
     Ok(())
@@ -76,7 +81,11 @@ fn build_libhdfs() -> Result<()> {
 
     let mut builder = cc::Build::new();
     builder.warnings(false);
+
+    // This flag does not work on windows, just throws warnings
+    #[cfg(not(windows))]
     builder.static_flag(true);
+
     builder.static_crt(true);
 
     // Ignore all warnings from cc as we don't care about code written by Apache Hadoop.
@@ -209,6 +218,12 @@ fn build_libhdfs() -> Result<()> {
         if cfg!(target_os = "windows") {
             builder.include("libdirent/include");
         }
+    }
+
+    #[cfg(not(feature = "vendored"))]
+    {
+        println!("cargo:warning=Building libhdfs from source as a fallback, \
+        if you are encountering issues with missing headers on JDK8, consider enabling the `vendored` feature.");
     }
 
     builder.compile("hdfs");
