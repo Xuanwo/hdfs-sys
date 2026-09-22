@@ -650,9 +650,11 @@ static char* getClassPath()
  * every thread.  You must be holding the jvmMutex when you call this
  * function.
  *
+ * @param[out] attachedByLibhdfs whether libhdfs attached the current thread
+ *
  * @return          The JNIEnv on success; error code otherwise
  */
-static JNIEnv* getGlobalJNIEnv(void)
+static JNIEnv* getGlobalJNIEnv(bool *attachedByLibhdfs)
 {
     JavaVM* vmBuf[VM_BUF_LENGTH]; 
     JNIEnv *env;
@@ -671,6 +673,7 @@ static JNIEnv* getGlobalJNIEnv(void)
     JavaVM *vm;
     JavaVMOption *options;
 
+    *attachedByLibhdfs = false;
     rv = JNI_GetCreatedJavaVMs(&(vmBuf[0]), VM_BUF_LENGTH, &noVMs);
     if (rv != 0) {
         fprintf(stderr, "JNI_GetCreatedJavaVMs failed with error: %d\n", rv);
@@ -744,6 +747,7 @@ static JNIEnv* getGlobalJNIEnv(void)
                     "with error: %d\n", rv);
             return NULL;
         }
+        *attachedByLibhdfs = true;
 
         // We use findClassAndInvokeMethod here because the jclasses in
         // jclasses.h have not loaded yet
@@ -755,14 +759,23 @@ static JNIEnv* getGlobalJNIEnv(void)
             return NULL;
         }
     } else {
-        //Attach this thread to the VM
+        // Attach this thread only if it is not already attached.
         vm = vmBuf[0];
+        rv = (*vm)->GetEnv(vm, (void**)&env, JNI_VERSION_1_2);
+        if (rv == JNI_OK) {
+            return env;
+        }
+        if (rv != JNI_EDETACHED) {
+            fprintf(stderr, "Call to GetEnv failed with error: %d\n", rv);
+            return NULL;
+        }
         rv = (*vm)->AttachCurrentThread(vm, (void*)&env, 0);
         if (rv != 0) {
             fprintf(stderr, "Call to AttachCurrentThread "
                     "failed with error: %d\n", rv);
             return NULL;
         }
+        *attachedByLibhdfs = true;
     }
 
     return env;
@@ -823,7 +836,7 @@ JNIEnv* getJNIEnv(void)
     }
     THREAD_LOCAL_STORAGE_SET_QUICK(state);
 
-    state->env = getGlobalJNIEnv();
+    state->env = getGlobalJNIEnv(&state->attachedByLibhdfs);
     mutexUnlock(&jvmMutex);
 
     if (!state->env) {
@@ -961,4 +974,3 @@ jthrowable fetchEnumInstance(JNIEnv *env, const char *className,
     *out = jEnum;
     return NULL;
 }
-
