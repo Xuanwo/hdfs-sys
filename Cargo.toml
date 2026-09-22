@@ -6,8 +6,8 @@ documentation = "https://docs.rs/hdfs-sys"
 edition = "2021"
 license = "Apache-2.0"
 name = "hdfs-sys"
-repository = "https://github.com/Xuanwo/hdrs"
-version = "0.3.0"
+repository = "https://github.com/Xuanwo/hdfs-sys"
+version = "0.3.1"
 links = "hdfs"
 
 [package.metadata.docs.rs]

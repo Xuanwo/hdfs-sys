@@ -81,11 +81,6 @@ fn build_libhdfs() -> Result<()> {
 
     let mut builder = cc::Build::new();
     builder.warnings(false);
-
-    // This flag does not work on windows, just throws warnings
-    #[cfg(not(windows))]
-    builder.static_flag(true);
-
     builder.static_crt(true);
 
     // Ignore all warnings from cc as we don't care about code written by Apache Hadoop.
